@@ -11,6 +11,21 @@ from werkzeug.utils import secure_filename
 from forms import UploadForm
 
 
+def get_uploaded_images():
+	rootdir = os.getcwd()
+	filelist = []
+	for files in os.walk(rootdir + '/app/static/uploads'):
+	    for file in files:
+	        ext = os.path.splitext(file)
+	        if ((ext == '.jpg') or (ext == '.jpeg') or (ext == '.png')):
+	            filelist.append(file)
+	            return filelist
+            
+@app.route('/files')
+def files():
+    if not session.get('logged in'):
+        abort(401)
+    return render_template('files.html', filelist=get_uploaded_images())
 ###
 # Routing for your application.
 ###
@@ -33,7 +48,7 @@ def upload():
         abort(401)
     # Instantiate your form class
     form=UploadForm()
-    filefolder = app.config['UPLOAD_FOLDER']
+    filefolder = app.config['UPLOAD_FOLDER'] 
     # Validate file upload on submit
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -106,4 +121,4 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port="8080")
-    
+

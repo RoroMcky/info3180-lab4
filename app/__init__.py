@@ -13,12 +13,3 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 from app import views
 
-#app = Flask(__name__)
-#app.config['SECRET_KEY']='Sup3r$3cretkey'
-#app.config['SQLALCHEMY_DATABASE_URI']="./app/static/uploads"
-#db = SQLAlchemy(app)
-
-DEBUG=True
-SECRET_KEY = 'Sup3r$3cretkey'
- 
-from app import views
