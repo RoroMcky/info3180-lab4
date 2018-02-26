@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 {% block main %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}"> 
+
 {% include 'flash_messages.html' %}
 
-<h1> This is the list of files that have been uploaded already</h1>
-<div id="grid">
+<h1> Uploaded Files</h1>
+<div class="grid">
 {% for upload in filelist %}
-		<img src={{ url_for('static',filename= 'uploads/'+ upload)}} height="200" width="200">
+<div class="item">
+		<img src={{ url_for('static',filename= 'uploads/'+ upload)}} height="400" width="400">
+</div>
 {% endfor %}
 </div>
 {% endblock %}

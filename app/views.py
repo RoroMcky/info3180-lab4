@@ -9,27 +9,23 @@ from app import app
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
 from forms import UploadForm
-import os 
 
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    uploaded_images = []
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            uploaded_images.append(file)
+    return uploaded_images        
+
+###
+# Routing for your application.
+###
 @app.route('/files')
 def files():
     if not session.get('logged_in'):
         abort(401)
     return render_template('files.html', filelist=get_uploaded_images())
-    
-def get_uploaded_images():
-	rootdir = os.getcwd()
-	filelist = []
-	for files in os.walk(rootdir + '/app/static/uploads'):
-	    for file in files:
-	        name, ext = os.path.splitext(file)
-	        if ((ext == '.jpg') or (ext == '.jpeg') or (ext == '.png')):
-	            filelist.append(file)
-	return filelist
-            
-###
-# Routing for your application.
-###
 
 @app.route('/')
 def home():
@@ -101,7 +97,6 @@ def send_text_file(file_name):
     """Send your static text file."""
     file_dot_text = file_name + '.txt'
     return app.send_static_file(file_dot_text)
-
 
 @app.after_request
 def add_header(response):
