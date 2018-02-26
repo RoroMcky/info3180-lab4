@@ -9,6 +9,7 @@ from app import app
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
 from forms import UploadForm
+import os 
 
 
 def get_uploaded_images():
@@ -25,7 +26,7 @@ def get_uploaded_images():
 def files():
     if not session.get('logged in'):
         abort(401)
-    return render_template('files.html', filelist=get_uploaded_images())
+        return render_template('files.html', filelist=get_uploaded_images())
 ###
 # Routing for your application.
 ###

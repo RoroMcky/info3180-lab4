@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block main %}
+{% include 'flash_messages.html' %}
 
 <h1> This is the list of files that have been uploaded already</h1>
-<ol> 
+
 {% for upload in filelist %}
 		<img src={{ url_for('static',filename= 'uploads/'+ upload)}} height="200" width="200">
-			<li>{{upload}}</li>
 {% endfor %}
-</ol>
+
 {% endblock %}
